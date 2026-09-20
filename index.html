@@ -1,0 +1,864 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TCC Community</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#050505;
+  color:white;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(5,5,5,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #292929;
+  padding:14px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:4px;
+}
+
+.logo span{
+  color:#d00000;
+}
+
+.header-buttons{
+  display:flex;
+  gap:8px;
+}
+
+button{
+  cursor:pointer;
+}
+
+.header-buttons button{
+  background:#151515;
+  border:1px solid #333;
+  color:#ddd;
+  padding:9px 13px;
+  border-radius:5px;
+}
+
+.header-buttons .join{
+  background:#b00000;
+  border-color:#d00000;
+  color:white;
+}
+
+.container{
+  max-width:850px;
+  margin:auto;
+  padding:22px 14px;
+}
+
+.hero{
+  min-height:300px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:35px;
+  border:1px solid #292929;
+  border-radius:12px;
+  background:
+    radial-gradient(circle at 80% 20%,#360000,transparent 35%),
+    linear-gradient(135deg,#120000,#080808);
+  margin-bottom:22px;
+  overflow:hidden;
+}
+
+.hero small{
+  color:#d00000;
+  letter-spacing:3px;
+  font-weight:bold;
+}
+
+.hero h1{
+  margin-top:12px;
+  font-size:clamp(40px,10vw,75px);
+  letter-spacing:5px;
+}
+
+.hero h1 span{
+  color:#d00000;
+}
+
+.hero p{
+  color:#999;
+  line-height:1.7;
+  max-width:620px;
+  margin-top:15px;
+}
+
+.navtabs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin-bottom:20px;
+}
+
+.navtabs button{
+  white-space:nowrap;
+  padding:10px 16px;
+  border-radius:6px;
+  background:#101010;
+  border:1px solid #303030;
+  color:#aaa;
+}
+
+.navtabs button:hover{
+  color:white;
+  border-color:#a00000;
+}
+
+.card{
+  background:#0d0d0d;
+  border:1px solid #292929;
+  border-radius:10px;
+  padding:20px;
+  margin-bottom:17px;
+}
+
+.post-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#850000;
+  font-weight:bold;
+}
+
+.name{
+  font-weight:bold;
+}
+
+.role{
+  font-size:11px;
+  color:#d00000;
+  margin-top:3px;
+}
+
+.time{
+  color:#666;
+  font-size:11px;
+}
+
+.post-content{
+  color:#ccc;
+  line-height:1.7;
+  white-space:pre-wrap;
+}
+
+.actions{
+  display:flex;
+  gap:22px;
+  border-top:1px solid #222;
+  margin-top:18px;
+  padding-top:12px;
+}
+
+.actions button{
+  background:none;
+  border:0;
+  color:#888;
+}
+
+.actions button:hover{
+  color:#ff3333;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.create-post textarea,
+.form input,
+.form textarea{
+  width:100%;
+  background:#070707;
+  border:1px solid #333;
+  color:white;
+  border-radius:6px;
+  padding:13px;
+  outline:none;
+}
+
+.create-post textarea{
+  min-height:100px;
+  resize:none;
+}
+
+.form textarea{
+  min-height:120px;
+  resize:vertical;
+}
+
+.form label{
+  display:block;
+  color:#999;
+  font-size:13px;
+  margin:15px 0 7px;
+}
+
+.primary{
+  margin-top:12px;
+  background:#b00000;
+  color:white;
+  border:0;
+  padding:12px 20px;
+  border-radius:5px;
+  font-weight:bold;
+}
+
+.primary:hover{
+  background:#e00000;
+}
+
+.rules li{
+  color:#aaa;
+  margin:14px 0;
+  line-height:1.5;
+}
+
+.notice{
+  padding:15px;
+  background:#150000;
+  border:1px solid #580000;
+  border-radius:7px;
+  color:#aaa;
+  margin-bottom:18px;
+}
+
+.success{
+  display:none;
+  margin-top:15px;
+  padding:15px;
+  background:#071707;
+  border:1px solid #185c18;
+  color:#65d765;
+  border-radius:6px;
+}
+
+footer{
+  text-align:center;
+  color:#555;
+  border-top:1px solid #222;
+  padding:35px 15px;
+  margin-top:60px;
+  font-size:13px;
+}
+
+@media(max-width:600px){
+  header{
+    padding:12px;
+  }
+
+  .logo{
+    font-size:19px;
+  }
+
+  .header-buttons button{
+    padding:8px 9px;
+    font-size:11px;
+  }
+
+  .hero{
+    padding:25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    T<span>C</span>C
+  </div>
+
+  <div class="header-buttons">
+    <button onclick="openSection('feed')">
+      Feed
+    </button>
+
+    <button class="join" onclick="openSection('apply')">
+      Register
+    </button>
+  </div>
+
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+
+  <div class="hero">
+
+    <small>WELCOME TO THE COMMUNITY</small>
+
+    <h1>TRUE <span>CRIME</span></h1>
+
+    <p>
+      TCC is a community space for responsible
+      discussion, research, awareness, and
+      community activities.
+    </p>
+
+  </div>
+
+
+  <!-- NAVIGATION -->
+
+  <div class="navtabs">
+
+    <button onclick="openSection('feed')">
+      🏠 Home
+    </button>
+
+    <button onclick="openSection('feed')">
+      📰 Community
+    </button>
+
+    <button onclick="openSection('rules')">
+      🛡 Rules
+    </button>
+
+    <button onclick="openSection('apply')">
+      📝 Register
+    </button>
+
+  </div>
+
+
+  <!-- FEED -->
+
+  <div id="feed" class="section active">
+
+    <!-- PUBLIC POST -->
+
+    <div class="card">
+
+      <div class="post-header">
+
+        <div class="avatar">
+          T
+        </div>
+
+        <div>
+
+          <div class="name">
+            TCC Community
+          </div>
+
+          <div class="time">
+            Welcome post • Public
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="post-content">
+Welcome to the TCC Community.
+
+Before registering, take some time to look around,
+read the community rules, and see what the community
+is about.
+
+Registration is available for people who want to
+participate in the community.
+      </div>
+
+      <div class="actions">
+
+        <button onclick="like(this)">
+          ❤️ Like
+        </button>
+
+        <button>
+          💬 Comment
+        </button>
+
+        <button>
+          ↗ Share
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- COMMUNITY POST -->
+
+    <div class="card">
+
+      <div class="post-header">
+
+        <div class="avatar">
+          C
+        </div>
+
+        <div>
+
+          <div class="name">
+            Community Notice
+          </div>
+
+          <div class="time">
+            Public announcement
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="post-content">
+📢 COMMUNITY NOTICE
+
+New members are encouraged to read the rules
+before participating.
+
+Keep discussions respectful and verify information
+before sharing it as fact.
+      </div>
+
+      <div class="actions">
+
+        <button onclick="like(this)">
+          ❤️ Like
+        </button>
+
+        <button>
+          💬 Comment
+        </button>
+
+        <button>
+          ↗ Share
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- OWNER POST -->
+
+    <div class="card">
+
+      <div class="post-header">
+
+        <div class="avatar">
+          F
+        </div>
+
+        <div>
+
+          <div class="name">
+            Founder
+          </div>
+
+          <div class="role">
+            COMMUNITY OWNER
+          </div>
+
+          <div class="time">
+            Official community post
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="post-content">
+Welcome to TCC.
+
+This community is built around responsible
+discussion and awareness.
+
+Thank you for respecting the rules and
+other members.
+      </div>
+
+      <div class="actions">
+
+        <button onclick="like(this)">
+          ❤️ Like
+        </button>
+
+        <button>
+          💬 Comment
+        </button>
+
+        <button>
+          ↗ Share
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- CREATE POST DEMO -->
+
+    <div class="card create-post">
+
+      <h3>Create a Community Post</h3>
+
+      <br>
+
+      <textarea
+        id="postText"
+        placeholder="Write a community post..."
+      ></textarea>
+
+      <button
+        class="primary"
+        onclick="createPost()"
+      >
+        POST
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- RULES -->
+
+  <div id="rules" class="section">
+
+    <div class="card rules">
+
+      <h2>🛡 TCC Community Rules</h2>
+
+      <ul>
+
+        <li>
+          Respect members, victims, and families.
+        </li>
+
+        <li>
+          No harassment, threats, or bullying.
+        </li>
+
+        <li>
+          No doxxing or sharing private information.
+        </li>
+
+        <li>
+          Do not present unverified claims as facts.
+        </li>
+
+        <li>
+          Do not fabricate evidence or information.
+        </li>
+
+        <li>
+          Keep discussions responsible and respectful.
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <!-- REGISTER -->
+
+  <div id="apply" class="section">
+
+    <div class="notice">
+
+      <b>Before you register</b><br><br>
+
+      Registration allows you to participate in
+      the community. Please read the rules first.
+
+    </div>
+
+
+    <div class="card form">
+
+      <h2>📝 TCC Registration</h2>
+
+      <label>USERNAME</label>
+
+      <input
+        id="appName"
+        placeholder="Enter your username"
+      >
+
+
+      <label>AGE</label>
+
+      <input
+        id="appAge"
+        type="number"
+        placeholder="Enter your age"
+      >
+
+
+      <label>WHY DO YOU WANT TO JOIN?</label>
+
+      <textarea
+        id="appReason"
+        placeholder="Tell us why..."
+      ></textarea>
+
+
+      <label>WHAT CAN YOU CONTRIBUTE?</label>
+
+      <textarea
+        id="appContribution"
+        placeholder="Tell us what you can contribute..."
+      ></textarea>
+
+
+      <label>
+
+        <input
+          type="checkbox"
+          id="agree"
+        >
+
+        I agree to follow the TCC community rules.
+
+      </label>
+
+
+      <button
+        class="primary"
+        onclick="submitApplication()"
+      >
+        SUBMIT REGISTRATION
+      </button>
+
+
+      <div id="success" class="success">
+
+        ✅ Registration submitted.
+
+        <br><br>
+
+        Your application is ready for review
+        by the community owner.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<footer>
+
+  TCC — TRUE CRIME COMMUNITY
+
+  <br><br>
+
+  Research • Discussion • Awareness • Respect
+
+</footer>
+
+
+<script>
+
+function openSection(section){
+
+  document.querySelectorAll(".section")
+    .forEach(function(el){
+
+      el.classList.remove("active");
+
+    });
+
+  document.getElementById(section)
+    .classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function like(button){
+
+  if(button.innerText.includes("Liked")){
+
+    button.innerText="❤️ Like";
+
+  }else{
+
+    button.innerText="❤️ Liked";
+
+  }
+
+}
+
+
+function createPost(){
+
+  const text=
+    document.getElementById("postText").value.trim();
+
+  if(!text){
+
+    alert("Write something first.");
+
+    return;
+
+  }
+
+
+  const post=document.createElement("div");
+
+  post.className="card";
+
+
+  post.innerHTML=`
+
+    <div class="post-header">
+
+      <div class="avatar">
+        U
+      </div>
+
+      <div>
+
+        <div class="name">
+          Community Member
+        </div>
+
+        <div class="time">
+          Just now
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="post-content">
+${text}
+    </div>
+
+
+    <div class="actions">
+
+      <button onclick="like(this)">
+        ❤️ Like
+      </button>
+
+      <button>
+        💬 Comment
+      </button>
+
+      <button>
+        ↗ Share
+      </button>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById("feed")
+    .insertBefore(
+      post,
+      document.querySelector(".create-post")
+    );
+
+
+  document.getElementById("postText").value="";
+
+}
+
+
+function submitApplication(){
+
+  const name=
+    document.getElementById("appName").value.trim();
+
+  const age=
+    document.getElementById("appAge").value;
+
+  const reason=
+    document.getElementById("appReason").value.trim();
+
+  const contribution=
+    document.getElementById("appContribution")
+    .value.trim();
+
+  const agree=
+    document.getElementById("agree").checked;
+
+
+  if(!name || !age || !reason || !contribution){
+
+    alert("Please complete all fields.");
+
+    return;
+
+  }
+
+
+  if(!agree){
+
+    alert("Please agree to the community rules.");
+
+    return;
+
+  }
+
+
+  document.getElementById("success")
+    .style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
+```
+  

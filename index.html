@@ -1,864 +1,192 @@
-```html
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="tl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TCC Community</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial, sans-serif;
-}
-
-body{
-  background:#050505;
-  color:white;
-}
-
-header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(5,5,5,.95);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid #292929;
-  padding:14px 18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo{
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:4px;
-}
-
-.logo span{
-  color:#d00000;
-}
-
-.header-buttons{
-  display:flex;
-  gap:8px;
-}
-
-button{
-  cursor:pointer;
-}
-
-.header-buttons button{
-  background:#151515;
-  border:1px solid #333;
-  color:#ddd;
-  padding:9px 13px;
-  border-radius:5px;
-}
-
-.header-buttons .join{
-  background:#b00000;
-  border-color:#d00000;
-  color:white;
-}
-
-.container{
-  max-width:850px;
-  margin:auto;
-  padding:22px 14px;
-}
-
-.hero{
-  min-height:300px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:35px;
-  border:1px solid #292929;
-  border-radius:12px;
-  background:
-    radial-gradient(circle at 80% 20%,#360000,transparent 35%),
-    linear-gradient(135deg,#120000,#080808);
-  margin-bottom:22px;
-  overflow:hidden;
-}
-
-.hero small{
-  color:#d00000;
-  letter-spacing:3px;
-  font-weight:bold;
-}
-
-.hero h1{
-  margin-top:12px;
-  font-size:clamp(40px,10vw,75px);
-  letter-spacing:5px;
-}
-
-.hero h1 span{
-  color:#d00000;
-}
-
-.hero p{
-  color:#999;
-  line-height:1.7;
-  max-width:620px;
-  margin-top:15px;
-}
-
-.navtabs{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  margin-bottom:20px;
-}
-
-.navtabs button{
-  white-space:nowrap;
-  padding:10px 16px;
-  border-radius:6px;
-  background:#101010;
-  border:1px solid #303030;
-  color:#aaa;
-}
-
-.navtabs button:hover{
-  color:white;
-  border-color:#a00000;
-}
-
-.card{
-  background:#0d0d0d;
-  border:1px solid #292929;
-  border-radius:10px;
-  padding:20px;
-  margin-bottom:17px;
-}
-
-.post-header{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:15px;
-}
-
-.avatar{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#850000;
-  font-weight:bold;
-}
-
-.name{
-  font-weight:bold;
-}
-
-.role{
-  font-size:11px;
-  color:#d00000;
-  margin-top:3px;
-}
-
-.time{
-  color:#666;
-  font-size:11px;
-}
-
-.post-content{
-  color:#ccc;
-  line-height:1.7;
-  white-space:pre-wrap;
-}
-
-.actions{
-  display:flex;
-  gap:22px;
-  border-top:1px solid #222;
-  margin-top:18px;
-  padding-top:12px;
-}
-
-.actions button{
-  background:none;
-  border:0;
-  color:#888;
-}
-
-.actions button:hover{
-  color:#ff3333;
-}
-
-.section{
-  display:none;
-}
-
-.section.active{
-  display:block;
-}
-
-.create-post textarea,
-.form input,
-.form textarea{
-  width:100%;
-  background:#070707;
-  border:1px solid #333;
-  color:white;
-  border-radius:6px;
-  padding:13px;
-  outline:none;
-}
-
-.create-post textarea{
-  min-height:100px;
-  resize:none;
-}
-
-.form textarea{
-  min-height:120px;
-  resize:vertical;
-}
-
-.form label{
-  display:block;
-  color:#999;
-  font-size:13px;
-  margin:15px 0 7px;
-}
-
-.primary{
-  margin-top:12px;
-  background:#b00000;
-  color:white;
-  border:0;
-  padding:12px 20px;
-  border-radius:5px;
-  font-weight:bold;
-}
-
-.primary:hover{
-  background:#e00000;
-}
-
-.rules li{
-  color:#aaa;
-  margin:14px 0;
-  line-height:1.5;
-}
-
-.notice{
-  padding:15px;
-  background:#150000;
-  border:1px solid #580000;
-  border-radius:7px;
-  color:#aaa;
-  margin-bottom:18px;
-}
-
-.success{
-  display:none;
-  margin-top:15px;
-  padding:15px;
-  background:#071707;
-  border:1px solid #185c18;
-  color:#65d765;
-  border-radius:6px;
-}
-
-footer{
-  text-align:center;
-  color:#555;
-  border-top:1px solid #222;
-  padding:35px 15px;
-  margin-top:60px;
-  font-size:13px;
-}
-
-@media(max-width:600px){
-  header{
-    padding:12px;
-  }
-
-  .logo{
-    font-size:19px;
-  }
-
-  .header-buttons button{
-    padding:8px 9px;
-    font-size:11px;
-  }
-
-  .hero{
-    padding:25px;
-  }
-}
+:root{--bg:#0b0d10;--panel:#12161b;--panel2:#191e24;--line:#2a313a;--text:#f2f4f7;--muted:#9aa4af;--accent:#20c77a;--danger:#ef5350;--blue:#4d8dff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.top{position:sticky;top:0;z-index:20;background:#0d1014ee;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:10px;padding:12px 16px}.brand{font-weight:900;font-size:22px;letter-spacing:2px;margin-right:auto}.brand span{color:var(--accent)}
+.nav button{background:transparent;color:var(--muted);border:0;padding:9px 10px;border-radius:9px}.nav button:hover{background:var(--panel2);color:#fff}
+.wrap{max-width:1100px;margin:22px auto;padding:0 14px}.grid{display:grid;grid-template-columns:230px minmax(0,620px) 230px;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 5px 20px #0003}
+.side h3{font-size:13px;color:var(--muted);text-transform:uppercase;margin:4px 0 10px}.side a{display:block;padding:10px;border-radius:9px;color:#dce2e8;text-decoration:none}.side a:hover{background:var(--panel2)}
+.profile-mini{display:flex;gap:10px;align-items:center;margin-bottom:12px}.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#20c77a,#116d48);display:grid;place-items:center;font-weight:900}.name{font-weight:800}.muted{color:var(--muted);font-size:13px}
+.hero{padding:22px;background:linear-gradient(135deg,#141b18,#10151a);border:1px solid #234b3a}.hero h1{margin:0 0 8px;font-size:30px}.hero p{color:#b8c0c9;line-height:1.5}
+.btn{border:0;border-radius:9px;padding:10px 14px;font-weight:800}.primary{background:var(--accent);color:#07140d}.darkbtn{background:var(--panel2);color:#fff;border:1px solid var(--line)}.danger{background:#351719;color:#ffb5b5;border:1px solid #663034}
+textarea,input,select{width:100%;background:#0e1216;border:1px solid var(--line);color:#fff;border-radius:9px;padding:11px;outline:none}textarea:focus,input:focus,select:focus{border-color:#397e5d}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
+.post-head{display:flex;align-items:center;gap:10px}.post-head .date{margin-left:auto}.post-body{white-space:pre-wrap;line-height:1.5;margin:14px 0}.actions{display:flex;gap:4px;border-top:1px solid var(--line);padding-top:8px}.actions button{flex:1;background:transparent;color:var(--muted);border:0;border-radius:8px;padding:9px}.actions button:hover{background:var(--panel2);color:#fff}.liked{color:#ff5470!important}
+.comment{border-top:1px solid var(--line);padding:9px 0}.comment strong{font-size:13px}.comment p{margin:4px 0;color:#d8dde2;font-size:14px}
+.hidden{display:none!important}.section-title{margin:0 0 12px}.notice{padding:11px;border-radius:9px;background:#171d23;border:1px solid var(--line);font-size:13px;color:#c7ced5}.tag{display:inline-block;padding:4px 7px;border-radius:999px;background:#183a2b;color:#7ff0b4;font-size:11px;font-weight:800}
+.rules li{margin:8px 0;color:#cbd1d7}.small{font-size:12px}.center{text-align:center}.tabs{display:flex;gap:7px;margin-bottom:12px}.tabs button{background:var(--panel2);border:1px solid var(--line);color:#bbb;padding:8px 12px;border-radius:8px}.tabs button.active{color:#fff;border-color:#397e5d}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.left,.right{display:none}.wrap{margin-top:12px}.nav button{display:none}.nav .mobile-show{display:block}.brand{margin-right:0}.nav{justify-content:space-between}.hero h1{font-size:25px}}
 </style>
 </head>
-
 <body>
+<header class="top"><nav class="nav">
+  <div class="brand"><span>T</span>CC</div>
+  <button class="mobile-show" onclick="show('home')">Home</button>
+  <button class="mobile-show" onclick="show('members')">Members</button>
+  <button class="mobile-show" onclick="show('rules')">Rules</button>
+  <button class="mobile-show" id="authNav" onclick="show('auth')">Login</button>
+</nav></header>
 
-<header>
+<main class="wrap">
+<section id="home">
+<div class="grid">
+<aside class="side left">
+  <div class="card" id="miniProfile"></div>
+  <div class="card">
+    <h3>Community</h3>
+    <a href="#" onclick="show('home');return false">🏠 Home Feed</a>
+    <a href="#" onclick="show('members');return false">👥 Members</a>
+    <a href="#" onclick="show('rules');return false">📜 Rules</a>
+    <a href="#" onclick="show('auth');return false">🔐 Login / Register</a>
+  </div>
+</aside>
 
-  <div class="logo">
-    T<span>C</span>C
+<section>
+  <div class="card hero">
+    <span class="tag">TCC COMMUNITY</span>
+    <h1>TRUE CRIME COMMUNITY</h1>
+    <p>Isang community feed para sa discussion, research, case updates at community posts.</p>
+    <div id="heroButtons"></div>
   </div>
 
-  <div class="header-buttons">
-    <button onclick="openSection('feed')">
-      Feed
-    </button>
-
-    <button class="join" onclick="openSection('apply')">
-      Register
-    </button>
-  </div>
-
-</header>
-
-<div class="container">
-
-  <!-- HERO -->
-
-  <div class="hero">
-
-    <small>WELCOME TO THE COMMUNITY</small>
-
-    <h1>TRUE <span>CRIME</span></h1>
-
-    <p>
-      TCC is a community space for responsible
-      discussion, research, awareness, and
-      community activities.
-    </p>
-
-  </div>
-
-
-  <!-- NAVIGATION -->
-
-  <div class="navtabs">
-
-    <button onclick="openSection('feed')">
-      🏠 Home
-    </button>
-
-    <button onclick="openSection('feed')">
-      📰 Community
-    </button>
-
-    <button onclick="openSection('rules')">
-      🛡 Rules
-    </button>
-
-    <button onclick="openSection('apply')">
-      📝 Register
-    </button>
-
-  </div>
-
-
-  <!-- FEED -->
-
-  <div id="feed" class="section active">
-
-    <!-- PUBLIC POST -->
-
-    <div class="card">
-
-      <div class="post-header">
-
-        <div class="avatar">
-          T
-        </div>
-
-        <div>
-
-          <div class="name">
-            TCC Community
-          </div>
-
-          <div class="time">
-            Welcome post • Public
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="post-content">
-Welcome to the TCC Community.
-
-Before registering, take some time to look around,
-read the community rules, and see what the community
-is about.
-
-Registration is available for people who want to
-participate in the community.
-      </div>
-
-      <div class="actions">
-
-        <button onclick="like(this)">
-          ❤️ Like
-        </button>
-
-        <button>
-          💬 Comment
-        </button>
-
-        <button>
-          ↗ Share
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- COMMUNITY POST -->
-
-    <div class="card">
-
-      <div class="post-header">
-
-        <div class="avatar">
-          C
-        </div>
-
-        <div>
-
-          <div class="name">
-            Community Notice
-          </div>
-
-          <div class="time">
-            Public announcement
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="post-content">
-📢 COMMUNITY NOTICE
-
-New members are encouraged to read the rules
-before participating.
-
-Keep discussions respectful and verify information
-before sharing it as fact.
-      </div>
-
-      <div class="actions">
-
-        <button onclick="like(this)">
-          ❤️ Like
-        </button>
-
-        <button>
-          💬 Comment
-        </button>
-
-        <button>
-          ↗ Share
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- OWNER POST -->
-
-    <div class="card">
-
-      <div class="post-header">
-
-        <div class="avatar">
-          F
-        </div>
-
-        <div>
-
-          <div class="name">
-            Founder
-          </div>
-
-          <div class="role">
-            COMMUNITY OWNER
-          </div>
-
-          <div class="time">
-            Official community post
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="post-content">
-Welcome to TCC.
-
-This community is built around responsible
-discussion and awareness.
-
-Thank you for respecting the rules and
-other members.
-      </div>
-
-      <div class="actions">
-
-        <button onclick="like(this)">
-          ❤️ Like
-        </button>
-
-        <button>
-          💬 Comment
-        </button>
-
-        <button>
-          ↗ Share
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- CREATE POST DEMO -->
-
-    <div class="card create-post">
-
-      <h3>Create a Community Post</h3>
-
-      <br>
-
-      <textarea
-        id="postText"
-        placeholder="Write a community post..."
-      ></textarea>
-
-      <button
-        class="primary"
-        onclick="createPost()"
-      >
-        POST
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- RULES -->
-
-  <div id="rules" class="section">
-
-    <div class="card rules">
-
-      <h2>🛡 TCC Community Rules</h2>
-
-      <ul>
-
-        <li>
-          Respect members, victims, and families.
-        </li>
-
-        <li>
-          No harassment, threats, or bullying.
-        </li>
-
-        <li>
-          No doxxing or sharing private information.
-        </li>
-
-        <li>
-          Do not present unverified claims as facts.
-        </li>
-
-        <li>
-          Do not fabricate evidence or information.
-        </li>
-
-        <li>
-          Keep discussions responsible and respectful.
-        </li>
-
-      </ul>
-
-    </div>
-
-  </div>
-
-
-  <!-- REGISTER -->
-
-  <div id="apply" class="section">
-
-    <div class="notice">
-
-      <b>Before you register</b><br><br>
-
-      Registration allows you to participate in
-      the community. Please read the rules first.
-
-    </div>
-
-
-    <div class="card form">
-
-      <h2>📝 TCC Registration</h2>
-
-      <label>USERNAME</label>
-
-      <input
-        id="appName"
-        placeholder="Enter your username"
-      >
-
-
-      <label>AGE</label>
-
-      <input
-        id="appAge"
-        type="number"
-        placeholder="Enter your age"
-      >
-
-
-      <label>WHY DO YOU WANT TO JOIN?</label>
-
-      <textarea
-        id="appReason"
-        placeholder="Tell us why..."
-      ></textarea>
-
-
-      <label>WHAT CAN YOU CONTRIBUTE?</label>
-
-      <textarea
-        id="appContribution"
-        placeholder="Tell us what you can contribute..."
-      ></textarea>
-
-
-      <label>
-
-        <input
-          type="checkbox"
-          id="agree"
-        >
-
-        I agree to follow the TCC community rules.
-
-      </label>
-
-
-      <button
-        class="primary"
-        onclick="submitApplication()"
-      >
-        SUBMIT REGISTRATION
-      </button>
-
-
-      <div id="success" class="success">
-
-        ✅ Registration submitted.
-
-        <br><br>
-
-        Your application is ready for review
-        by the community owner.
-
-      </div>
-
-    </div>
-
-  </div>
-
+  <div class="card" id="composer"></div>
+  <div id="feed"></div>
+</section>
+
+<aside class="side right">
+  <div class="card"><h3>Community status</h3><p class="muted">Members: <b id="memberCount">0</b></p><p class="muted">Posts: <b id="postCount">0</b></p></div>
+  <div class="card"><h3>Quick rules</h3><p class="muted">Open discussion is allowed, but no threats, doxxing, stalking, illegal instructions, or knowingly fabricated evidence.</p></div>
+</aside>
 </div>
+</section>
 
+<section id="auth" class="hidden">
+<div class="card" style="max-width:600px;margin:auto">
+  <div class="tabs"><button id="loginTab" class="active" onclick="authTab('login')">Login</button><button id="regTab" onclick="authTab('register')">Register</button></div>
+  <div id="authBox"></div>
+</div>
+</section>
 
-<footer>
+<section id="members" class="hidden">
+<div class="card"><h2 class="section-title">Members</h2><div id="membersList"></div></div>
+</section>
 
-  TCC — TRUE CRIME COMMUNITY
+<section id="rules" class="hidden">
+<div class="card">
+<h2 class="section-title">TCC Community Rules</h2>
+<p class="muted">Maluwag ang discussion dito. Hindi kailangan pare-pareho ang opinion. Pero may ilang bagay na hindi puwedeng payagan dahil puwedeng makapinsala sa tao o maglagay sa community sa panganib.</p>
+<ul class="rules">
+<li>Malayang discussion, disagreement at criticism ay puwede.</li>
+<li>Puwede ang case theories at sariling analysis basta malinaw na opinion/theory ito.</li>
+<li>Huwag mag-post ng private information tulad ng address, phone number, passwords o live location ng ibang tao.</li>
+<li>Walang threats, calls for violence, stalking o instructions para gumawa ng krimen.</li>
+<li>Huwag magpakalat ng “evidence” na alam mong peke o gumawa ng pekeng accusation laban sa tao.</li>
+<li>Huwag magpanggap na police, investigator, lawyer o official kung hindi naman.</li>
+<li>Respectful disagreement is encouraged; harassment and targeted abuse are not.</li>
+<li>Ang owner/admin ay maaaring mag-remove ng content o account na lumalabag sa rules.</li>
+</ul>
+</div>
+</section>
 
-  <br><br>
-
-  Research • Discussion • Awareness • Respect
-
-</footer>
-
+<section id="admin" class="hidden">
+<div class="card"><h2>Owner / Admin Panel</h2><div id="adminBox"></div></div>
+</section>
+</main>
 
 <script>
-
-function openSection(section){
-
-  document.querySelectorAll(".section")
-    .forEach(function(el){
-
-      el.classList.remove("active");
-
-    });
-
-  document.getElementById(section)
-    .classList.add("active");
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
+const KEY='tcc_v2_data';
+const ADMIN_USERNAME='OWNER';
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||{
+ users:[{id:1,username:'OWNER',password:'owner123',role:'OWNER',joined:Date.now()}],
+ posts:[
+  {id:1,userId:1,text:'Welcome sa TCC Community. Open discussion tayo tungkol sa true crime research at case analysis.',date:Date.now(),likes:[],comments:[]}
+ ],
+ session:null
+};
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}
+function user(){return db.users.find(u=>u.id===db.session)}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function avatar(u){return esc((u?.username||'?').slice(0,1).toUpperCase())}
+function show(id){
+ document.querySelectorAll('main>section').forEach(x=>x.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ if(id==='home')render();
+ if(id==='members')renderMembers();
+ if(id==='auth')renderAuth();
+ if(id==='admin')renderAdmin();
+ window.scrollTo({top:0,behavior:'smooth'});
 }
-
-
-function like(button){
-
-  if(button.innerText.includes("Liked")){
-
-    button.innerText="❤️ Like";
-
-  }else{
-
-    button.innerText="❤️ Liked";
-
-  }
-
+function render(){
+ const u=user();
+ document.getElementById('authNav').textContent=u?'Logout':'Login';
+ document.getElementById('authNav').onclick=u?logout:()=>show('auth');
+ document.getElementById('miniProfile').innerHTML=u?
+ `<div class="profile-mini"><div class="avatar">${avatar(u)}</div><div><div class="name">${esc(u.username)}</div><div class="muted">${u.role}</div></div></div>${u.role==='OWNER'?'<a href="#" onclick="show(\\'admin\\');return false">⚙️ Admin panel</a>':''}`
+ :'<div class="muted">Login para makapag-post at makapag-comment.</div>';
+ document.getElementById('heroButtons').innerHTML=u?`<button class="btn darkbtn" onclick="logout()">Logout</button>`:`<button class="btn primary" onclick="show('auth')">Register / Login</button>`;
+ document.getElementById('composer').innerHTML=u?
+ `<h3>Create post</h3><textarea id="newPost" maxlength="5000" placeholder="Ano ang gusto mong i-post?"></textarea><br><br><button class="btn primary" onclick="createPost()">Post</button>`
+ :`<div class="notice">Public feed is visible. <b>Login/Register</b> para makagawa ng post, like at comment.</div>`;
+ document.getElementById('feed').innerHTML=db.posts.slice().sort((a,b)=>b.date-a.date).map(postHTML).join('');
+ document.getElementById('memberCount').textContent=db.users.length;
+ document.getElementById('postCount').textContent=db.posts.length;
 }
-
-
-function createPost(){
-
-  const text=
-    document.getElementById("postText").value.trim();
-
-  if(!text){
-
-    alert("Write something first.");
-
-    return;
-
-  }
-
-
-  const post=document.createElement("div");
-
-  post.className="card";
-
-
-  post.innerHTML=`
-
-    <div class="post-header">
-
-      <div class="avatar">
-        U
-      </div>
-
-      <div>
-
-        <div class="name">
-          Community Member
-        </div>
-
-        <div class="time">
-          Just now
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="post-content">
-${text}
-    </div>
-
-
-    <div class="actions">
-
-      <button onclick="like(this)">
-        ❤️ Like
-      </button>
-
-      <button>
-        💬 Comment
-      </button>
-
-      <button>
-        ↗ Share
-      </button>
-
-    </div>
-
-  `;
-
-
-  document
-    .getElementById("feed")
-    .insertBefore(
-      post,
-      document.querySelector(".create-post")
-    );
-
-
-  document.getElementById("postText").value="";
-
+function postHTML(p){
+ const u=db.users.find(x=>x.id===p.userId)||{username:'Deleted',role:'MEMBER'};
+ const me=user(), liked=me&&p.likes.includes(me.id);
+ return `<article class="card">
+ <div class="post-head"><div class="avatar">${avatar(u)}</div><div><div class="name">${esc(u.username)} ${u.role==='OWNER'?'<span class="tag">OWNER</span>':''}</div><div class="muted">${new Date(p.date).toLocaleString()}</div></div></div>
+ <div class="post-body">${esc(p.text)}</div>
+ <div class="actions">
+ <button class="${liked?'liked':''}" onclick="likePost(${p.id})">♥ ${p.likes.length}</button>
+ <button onclick="toggleComment(${p.id})">💬 ${p.comments.length}</button>
+ ${me&&me.role==='OWNER'?`<button onclick="deletePost(${p.id})">🗑 Delete</button>`:''}
+ </div>
+ <div id="comments-${p.id}" class="hidden">${p.comments.map(c=>`<div class="comment"><strong>${esc(c.username)}</strong><p>${esc(c.text)}</p></div>`).join('')}
+ ${me?`<div class="row"><input id="comment-${p.id}" maxlength="1000" placeholder="Write a comment..."><button class="btn darkbtn" onclick="comment(${p.id})">Send</button></div>`:''}</div>
+ </article>`;
 }
-
-
-function submitApplication(){
-
-  const name=
-    document.getElementById("appName").value.trim();
-
-  const age=
-    document.getElementById("appAge").value;
-
-  const reason=
-    document.getElementById("appReason").value.trim();
-
-  const contribution=
-    document.getElementById("appContribution")
-    .value.trim();
-
-  const agree=
-    document.getElementById("agree").checked;
-
-
-  if(!name || !age || !reason || !contribution){
-
-    alert("Please complete all fields.");
-
-    return;
-
-  }
-
-
-  if(!agree){
-
-    alert("Please agree to the community rules.");
-
-    return;
-
-  }
-
-
-  document.getElementById("success")
-    .style.display="block";
-
+function createPost(){const u=user(),box=document.getElementById('newPost');if(!u)return show('auth');const text=box.value.trim();if(!text)return alert('Lagyan muna ng laman.');db.posts.push({id:Date.now(),userId:u.id,text,date:Date.now(),likes:[],comments:[]});save();render()}
+function likePost(id){const u=user();if(!u)return show('auth');const p=db.posts.find(x=>x.id===id);if(!p)return;if(p.likes.includes(u.id))p.likes=p.likes.filter(x=>x!==u.id);else p.likes.push(u.id);save();render()}
+function toggleComment(id){document.getElementById('comments-'+id)?.classList.toggle('hidden')}
+function comment(id){const u=user();if(!u)return show('auth');const box=document.getElementById('comment-'+id),text=box.value.trim();if(!text)return;const p=db.posts.find(x=>x.id===id);p.comments.push({username:u.username,text,date:Date.now()});save();render();setTimeout(()=>document.getElementById('comments-'+id)?.classList.remove('hidden'),0)}
+function deletePost(id){if(user()?.role!=='OWNER')return;db.posts=db.posts.filter(p=>p.id!==id);save();render()}
+function authTab(t){document.getElementById('loginTab').classList.toggle('active',t==='login');document.getElementById('regTab').classList.toggle('active',t==='register');renderAuth(t)}
+function renderAuth(t='login'){
+ document.getElementById('authBox').innerHTML=t==='login'?`
+ <h2>Login</h2><input id="lu" placeholder="Username"><br><br><input id="lp" type="password" placeholder="Password"><br><br><button class="btn primary" onclick="login()">Login</button><p class="muted small">Demo owner: OWNER / owner123 — palitan agad kung gagamitin mo ito sa public testing.</p>`
+ :`<h2>Register</h2><input id="ru" maxlength="24" placeholder="Username"><br><br><input id="rp" type="password" minlength="6" placeholder="Password (6+ characters)"><br><br><button class="btn primary" onclick="register()">Create account</button><p class="muted small">Huwag maglagay ng address, ID number, password ng ibang account, o ibang sensitive information.</p>`;
 }
-
+function register(){
+ const username=document.getElementById('ru').value.trim(),password=document.getElementById('rp').value;
+ if(!/^[A-Za-z0-9_]{3,24}$/.test(username))return alert('Username: 3-24 letters, numbers o underscore lang.');
+ if(password.length<6)return alert('Password must be at least 6 characters.');
+ if(db.users.some(u=>u.username.toLowerCase()===username.toLowerCase()))return alert('Username already exists.');
+ const id=Date.now();db.users.push({id,username,password,role:'MEMBER',joined:Date.now()});db.session=id;save();show('home')
+}
+function login(){
+ const u=document.getElementById('lu').value.trim(),p=document.getElementById('lp').value;
+ const found=db.users.find(x=>x.username.toLowerCase()===u.toLowerCase()&&x.password===p);
+ if(!found)return alert('Wrong username or password.');
+ db.session=found.id;save();show('home')
+}
+function logout(){db.session=null;save();show('home')}
+function renderMembers(){
+ document.getElementById('membersList').innerHTML=db.users.map(u=>`<div class="card" style="margin-bottom:8px"><div class="profile-mini"><div class="avatar">${avatar(u)}</div><div><div class="name">${esc(u.username)} ${u.role==='OWNER'?'<span class="tag">OWNER</span>':''}</div><div class="muted">Joined ${new Date(u.joined).toLocaleDateString()}</div></div></div></div>`).join('');
+}
+function renderAdmin(){
+ const u=user();if(!u||u.role!=='OWNER'){document.getElementById('adminBox').innerHTML='<p>Owner only.</p>';return}
+ document.getElementById('adminBox').innerHTML=`<p class="muted">Registered accounts: ${db.users.length}</p><p class="muted">Posts: ${db.posts.length}</p><button class="btn danger" onclick="resetDemo()">Reset demo data</button>`;
+}
+function resetDemo(){if(confirm('Reset all local demo data?')){localStorage.removeItem(KEY);location.reload()}}
+render();renderAuth();
 </script>
-
 </body>
 </html>
-```
-  

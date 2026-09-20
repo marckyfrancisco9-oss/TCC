@@ -11,6 +11,8 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .top{position:sticky;top:0;z-index:20;background:#0d1014ee;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
 .nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:10px;padding:12px 16px}.brand{font-weight:900;font-size:22px;letter-spacing:2px;margin-right:auto}.brand span{color:var(--accent)}
 .nav button{background:transparent;color:var(--muted);border:0;padding:9px 10px;border-radius:9px}.nav button:hover{background:var(--panel2);color:#fff}
+.iconnav{display:flex;align-items:center;gap:5px}.navicon{min-width:58px;min-height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:20px;line-height:1}.navicon span{font-size:10px;font-weight:700}.navicon.active{color:var(--accent);background:#14251d}.navicon:active{transform:scale(.96)}
+@media(max-width:850px){.iconnav{width:100%;justify-content:space-around}.brand{margin-right:5px}.navicon{min-width:52px}}
 .wrap{max-width:1100px;margin:22px auto;padding:0 14px}.grid{display:grid;grid-template-columns:230px minmax(0,620px) 230px;gap:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 5px 20px #0003}
 .side h3{font-size:13px;color:var(--muted);text-transform:uppercase;margin:4px 0 10px}.side a{display:block;padding:10px;border-radius:9px;color:#dce2e8;text-decoration:none}.side a:hover{background:var(--panel2)}
@@ -28,10 +30,12 @@ textarea,input,select{width:100%;background:#0e1216;border:1px solid var(--line)
 <body>
 <header class="top"><nav class="nav">
   <div class="brand"><span>T</span>CC</div>
-  <button class="mobile-show" onclick="show('home')">Home</button>
-  <button class="mobile-show" onclick="show('members')">Members</button>
-  <button class="mobile-show" onclick="show('rules')">Rules</button>
-  <button class="mobile-show" id="authNav" onclick="show('auth')">Login</button>
+  <div class="iconnav" aria-label="Main navigation">
+    <button class="navicon active" title="Home" aria-label="Home" onclick="show('home')">⌂<span>Home</span></button>
+    <button class="navicon" title="Members" aria-label="Members" onclick="show('members')">👥<span>Members</span></button>
+    <button class="navicon" title="Rules" aria-label="Rules" onclick="show('rules')">📜<span>Rules</span></button>
+    <button class="navicon" title="Login or Register" aria-label="Login or Register" id="authNav" onclick="show('auth')">🔐<span>Login</span></button>
+  </div>
 </nav></header>
 
 <main class="wrap">
@@ -41,10 +45,10 @@ textarea,input,select{width:100%;background:#0e1216;border:1px solid var(--line)
   <div class="card" id="miniProfile"></div>
   <div class="card">
     <h3>Community</h3>
-    <a href="#" onclick="show('home');return false">🏠 Home Feed</a>
-    <a href="#" onclick="show('members');return false">👥 Members</a>
-    <a href="#" onclick="show('rules');return false">📜 Rules</a>
-    <a href="#" onclick="show('auth');return false">🔐 Login / Register</a>
+    <a href="#" onclick="show('home');return false">🏠 <span>Home Feed</span></a>
+    <a href="#" onclick="show('members');return false">👥 <span>Members</span></a>
+    <a href="#" onclick="show('rules');return false">📜 <span>Rules</span></a>
+    <a href="#" onclick="show('auth');return false">🔐 <span>Login / Register</span></a>
   </div>
 </aside>
 
@@ -115,6 +119,8 @@ function user(){return db.users.find(u=>u.id===db.session)}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function avatar(u){return esc((u?.username||'?').slice(0,1).toUpperCase())}
 function show(id){
+ document.querySelectorAll('.navicon').forEach(x=>x.classList.remove('active'));
+ const active=document.querySelector('.navicon[onclick*="'+id+'"]'); if(active) active.classList.add('active');
  document.querySelectorAll('main>section').forEach(x=>x.classList.add('hidden'));
  document.getElementById(id).classList.remove('hidden');
  if(id==='home')render();
@@ -125,7 +131,7 @@ function show(id){
 }
 function render(){
  const u=user();
- document.getElementById('authNav').textContent=u?'Logout':'Login';
+ document.getElementById('authNav').innerHTML=u?'↪<span>Logout</span>':'🔐<span>Login</span>';
  document.getElementById('authNav').onclick=u?logout:()=>show('auth');
  document.getElementById('miniProfile').innerHTML=u?
  `<div class="profile-mini"><div class="avatar">${avatar(u)}</div><div><div class="name">${esc(u.username)}</div><div class="muted">${u.role}</div></div></div>${u.role==='OWNER'?'<a href="#" onclick="show(\\'admin\\');return false">⚙️ Admin panel</a>':''}`
